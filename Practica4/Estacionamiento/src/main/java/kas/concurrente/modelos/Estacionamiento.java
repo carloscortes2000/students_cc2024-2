@@ -8,31 +8,38 @@ package kas.concurrente.modelos;
  * @version 1.0
  */
 public class Estacionamiento {
+    private Lugar[][] lugares;
+    private int lugaresDisponibles;
 
     /**
      * Metodo constructor
      * Modifica el constructor o crea otro segun consideres necesario
      * @param capacidad La capacidad del estacionamiento
      */
-    public Estacionamiento(int capacidad){
-        /**
-         * Aqui va tu codigo
-         */
+    public Estacionamiento(int pisos, int lugaresPorPiso) {
+        lugares = new Lugar[pisos][lugaresPorPiso];
+        for (int i = 0; i < pisos; i++) {
+            for (int j = 0; j < lugaresPorPiso; j++) {
+                lugares[i][j] = new Lugar(i * lugaresPorPiso + j);
+            }
+        }
+        lugaresDisponibles = pisos * lugaresPorPiso;
     }
 
     public int getLugaresDisponibles() {
-        return -1;
+        return lugaresDisponibles;
     }
 
     public void setLugaresDisponibles(int lugaresDisponibles) {
+        this.lugaresDisponibles = lugaresDisponibles;
     }
 
     /**
-     * Metodo que nos indica si esta lleno el estacionamiento
-     * @return true si esta lleno, false en otro caso
+     * Metodo que nos indica si esta lleno el estacionamiento.
+     * @return true si esta lleno, false en otro caso.
      */
-    public boolean estaLleno(){
-        return false;//Le mueven, es pa que compile
+    public boolean estaLleno() {
+        return lugaresDisponibles == 0;
     }
 
     /**
@@ -46,27 +53,29 @@ public class Estacionamiento {
     }
 
     /**
-     * Metodo en el que se simula la entrada de un carro
-     * Imprime un texto que dice que el carro a entrado de color AZUL
-     * @param nombre El nombre del carro
-     * @throws InterruptedException Si llega a fallar
+     * Metodo en el que se simula la entrada de un carro.
+     * Imprime un texto que dice que el carro a entrado de color AZUL.
+     * @param nombre El nombre del carro.
+     * @throws InterruptedException Si llega a fallar.
      */
-    public void entraCarro(int nombre) throws InterruptedException{
-        /**
-         * Aqui va tu codigo
-         */
+    public void entraCarro(int nombre) throws InterruptedException {
+        int lugar = obtenLugar();
+        asignaLugar(lugar);
+        System.out.println("El carro " + nombre + " entro al estacionamiento");
     }
 
     /**
-     * Metodo que asigna el lugar, una vez asignado ESTACIONA su nave
-     * @param lugar El lugar que correspone
-     * @throws InterruptedException
-     */
+    * Metodo que asigna el lugar, una vez asignado ESTACIONA su nave.
+    * @param lugar El lugar que corresponde en la matriz de lugares.
+    * @throws InterruptedException 
+    */
     public void asignaLugar(int lugar) throws InterruptedException {
-        /**
-         * Aqui va tucodigo
-         */
+        int piso = lugar / lugares[0].length;
+        int lugarEnPiso = lugar % lugares[0].length;
+        lugares[piso][lugarEnPiso].estaciona();
+        lugaresDisponibles--;
     }
+
 
     /**
      * Se obtiene un lugar de forma pseudoAleatoria
@@ -74,10 +83,13 @@ public class Estacionamiento {
      * repaso, quiero que expliquen porque lo pedimos en forma pseudoAleatoria
      * @return Retorna el indice del lugar
      */
-    public int obtenLugar(){
-        /**
-         * Aqui va tu codigo
-         */
-        return -1;
+    public int obtenLugar() {
+        int piso = (int) (Math.random() * lugares.length);
+        int lugarEnPiso = (int) (Math.random() * lugares[0].length);
+        return piso * lugares[0].length + lugarEnPiso;
+    }
+
+    public Lugar [][] getLugares(){
+        return lugares;
     }
 }
