@@ -17,8 +17,40 @@ public class Prisionero {
      * @param marcado true si ya paso
      */
     public Prisionero(Integer id, Boolean esVocero, Boolean marcado){
-        //Aqui pon lo que falta
+        this.id=id;
+        this.esVocero=esVocero;
+        this.marcado=marcado;
     }
 
-    //Annadir getter and setter, toString.
+    public Integer getId(){
+        return is;
+    }
+
+    public void setId(Integer id){
+        this.id=id;
+    }
+
+    public Boolean getEsVocero(){
+        return esVocero;
+    }
+
+    public void setEsVocero(Boolean esVocero){
+        this.esVocero=esVocero;
+    }
+
+    public Boolean getMarcado(){
+        return marcado;
+    }
+
+    public void setMarcado(Boolean marcado){
+        this.marcado=marcado;
+    }
+
+    public String toString() {
+        return "Prisionero{" +
+                "id=" + id +
+                ", esVocero=" + esVocero +
+                ", marcado=" + marcado +
+                '}';
+    }
 }

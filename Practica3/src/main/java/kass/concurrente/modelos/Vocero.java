@@ -8,9 +8,18 @@ package kass.concurrente.modelos;
  */
 public class Vocero extends Prisionero{
     protected Integer contador;
-    public Vocero(Integer id, Boolean esVocero, Boolean marcado) {
+    
+    public Vocero(Integer id, Boolean esVocero, Boolean marcado, Integer contador) {
         super(id, esVocero, marcado);
-        //Completar y hacer documentacion
+        this.contador = contador;
+    }
+
+    public Integer getContador() {
+        return contador;
+    }
+
+    public void setContador(Integer contador) {
+        this.contador = contador;
     }
     
     //Mismo caso que el otro, annadir getter and setter

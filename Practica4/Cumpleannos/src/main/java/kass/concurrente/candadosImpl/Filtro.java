@@ -12,33 +12,60 @@ import kass.concurrente.candados.Semaphore;
  */
 public class Filtro implements Semaphore {
 
+    private volatile boolean[] entrarA_SC;
+    private volatile int[] prioridad;
+    private int hilos;
+    private int maxHilosConcurrentes;
+
     /**
      * Constructor del Filtro
      * @param hilos El numero de Hilos Permitidos
      * @param maxHilosConcurrentes EL numero de hilos concurrentes simultaneos
      */
     public Filtro(int hilos, int maxHilosConcurrentes) {
-        /**
-         * AQUI VA TU CODIGO
-         */
+        this.hilos = hilos;
+        this.maxHilosConcurrentes = maxHilosConcurrentes;
+        this.entrarA_SC = new boolean[hilos];
+        this.prioridad = new int[hilos];
+
+        for (int i = 0; i < hilos; i++) {
+            entrarA_SC[i] = false;
+            prioridad[i] = 0;
+        }
     }
 
     @Override
     public int getPermitsOnCriticalSection() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPermitsOnCriticalSection'");
+        return maxHilosConcurrentes; 
     }
 
-    @Override
+     @Override
     public void acquire() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'acquire'");
+        int id = Integer.parseInt(Thread.currentThread().getName()); 
+
+        for (int i = 1; i < hilos; i++) {
+            entrarA_SC[id] = true; 
+            prioridad[id] = i; 
+
+            
+            for (int j = 0; j < hilos; j++) {
+                if (j != id) {
+                    
+                    while (entrarA_SC[j] && (prioridad[j] >= prioridad[id])) {
+                        try {
+                            Thread.sleep(1); 
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        int id = Integer.parseInt(Thread.currentThread().getName()); // Obtiene el ID del hilo actual
+        entrarA_SC[id] = false; // El hilo actual no quiere entrar en la sección crítica
     }
-    
 }
