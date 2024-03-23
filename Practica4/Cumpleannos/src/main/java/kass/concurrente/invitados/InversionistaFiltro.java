@@ -1,5 +1,6 @@
 package kass.concurrente.invitados;
 
+import kass.concurrente.tenedor.Tenedor;
 import kass.concurrente.candados.Semaphore;
 
 /**

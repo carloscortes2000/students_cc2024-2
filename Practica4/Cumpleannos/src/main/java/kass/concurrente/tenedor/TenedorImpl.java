@@ -1,6 +1,6 @@
 package kass.concurrente.tenedor;
 
-import kass.concurrente.candados.PetersonLock;
+import kass.concurrente.candadosImpl.PetersonLock;
 
 /**
  * Clase que implementa el tenedor
@@ -13,7 +13,7 @@ public class TenedorImpl implements Tenedor {
 
     private int id;
     private int vecesTomado;
-    private PetersonLock peterson = new Peterson();
+    private PetersonLock peterson = new PetersonLock(); 
 
     public TenedorImpl(int id) {
         this.id = id;

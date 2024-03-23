@@ -1,7 +1,7 @@
 package kass.concurrente.invitados;
 
 import kass.concurrente.tenedor.Tenedor;
-import kass.concurrente.tenedor.TenedorImpl;
+
 
 /**
  * Clase abstracta que modela al inversionista.
