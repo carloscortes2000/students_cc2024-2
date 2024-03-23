@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 public class EstacionamientoTest {
     Estacionamiento es;
-    final static int pisos = 4;
-    final static int lugaresPorPiso = 20;
+    final static int pisos = 2;
+    final static int lugaresPorPiso = 100;
     final static int NUMLUGARES = pisos * lugaresPorPiso;
     List<Thread> hilos;
 
@@ -38,7 +38,7 @@ public class EstacionamientoTest {
     @Test
     void conteoVecesEstacionado() throws InterruptedException{
         for(int i = 0; i < pisos; i++){
-            for(int j=0; i<lugaresPorPiso; j++){
+            for(int j=0; j<lugaresPorPiso; j++){
                 es.getLugares()[i][j].estaciona();
             }
         }
