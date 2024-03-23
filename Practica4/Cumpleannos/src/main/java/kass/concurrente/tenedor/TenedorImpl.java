@@ -24,10 +24,12 @@ public class TenedorImpl implements Tenedor {
     public void tomar() {
         peterson.lock(); 
         vecesTomado++;
+        System.out.println("Se tomó el tenedor"+id);
     }
 
     @Override
     public void soltar() {
+        System.out.println("El tenedor "+id+" se dejó de usar");
         peterson.unlock();
     }
 

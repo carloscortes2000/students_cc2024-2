@@ -13,12 +13,12 @@ import kass.concurrente.tenedor.TenedorImpl;
  */
 public abstract class Inversionista implements Runnable {
 
-    private Integer id;
-    private Integer vecesComido;
-    private Tenedor tenedorIzq;
-    private Tenedor tenedorDer;
+    protected Integer id;
+    protected Integer vecesComido;
+    protected Tenedor tenedorIzq;
+    protected Tenedor tenedorDer;
 
-    public Inversionista(int id, Tenedor tenedorIzq, Tenedor tenedorDer) {
+    protected Inversionista(int id, Tenedor tenedorIzq, Tenedor tenedorDer) {
         this.id = id;
         this.vecesComido = 0;
         this.tenedorIzq = tenedorIzq;
@@ -29,7 +29,7 @@ public abstract class Inversionista implements Runnable {
     public void run() {
         // El inversionista debe pensar y entrar a la mesa un período de veces
         // puesto en el test, agrega el valor aquí.
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 500; i++) {
             try {
                 piensa();
                 entraALaMesa();
@@ -63,10 +63,10 @@ public abstract class Inversionista implements Runnable {
      * @throws InterruptedException Si hay una interrupción mientras espera
      */
     public void come() throws InterruptedException {
-        // Simula el tiempo que tarda en comer
-        // piensa(); 
+        System.out.println("El inversionista "+id+" esta comiendo");
         Thread.sleep(generaTiempoDeEspera());
         this.vecesComido++;
+        System.out.println("El inversionista si que tenia hambre, ya terminó de comer");
     }
 
     /**
@@ -76,7 +76,9 @@ public abstract class Inversionista implements Runnable {
      * @throws InterruptedException Si hay una interrupción mientras espera
      */
     public void piensa() throws InterruptedException {
+        System.out.println("El inversionista "+id+" esta pensando en finanzas");
         Thread.sleep(generaTiempoDeEspera());
+        System.out.println("El inversionista terminó de pensar sobre finanzas, se prepara para comer");
     }
 
     /**
@@ -107,39 +109,66 @@ public abstract class Inversionista implements Runnable {
         return (long) (Math.random() * 10.0);
     }
 
-    /*
-     * Rellena Getter and Setters primero
-     * Documenta los metodos.
-     * Cuando acabes borra este comentario
-     */
+    /**
+    * Obtenemos el id del inversionista
+    * @return El id del inversionista
+    */
     public int getId() {
-        return id;
+        return id;  
     }
 
+    /**
+    * Establecemos el id del inversionista
+    * @param id El id del inversionista
+    */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+    * Obtenemos el tenedor izquierdo
+    * @return El tenedor izquierdo 
+    */
     public Tenedor getTenedorIzq() {
         return this.tenedorIzq;
     }
 
+    /**
+    * Establecemos el tenedor izquierdo
+    * @param tenedorIzq El tenedor izquierdo
+    */
     public void setTenedorIzq(Tenedor tenedorIzq) {
         this.tenedorIzq = tenedorIzq;
     }
 
+    /**
+     * Obtenemos el tenedor derecho
+     * @return El tenedor derecho
+     */
     public Tenedor getTenedorDer() {
         return this.tenedorDer;
     }
 
+    /**
+     * Establecemos el tenedor derecho
+     * @param tenedorDer El tenedor derecho
+     */
     public void setTenedorDer(Tenedor tenedorDer) {
         this.tenedorDer = tenedorDer;
     }
 
+    /**
+     * Obtenemos el número de veces que el inversionista ha comido.
+     * @return El número de veces que el inversionista ha comido
+     */
     public int getVecesComido() {
         return this.vecesComido;
     }
 
+    /**
+     * Establecemos el número de veces que el inversionista ha comido.
+     * @param vecesComido El número de veces que el inversionista ha comido
+     */
     public void setVecesComido(int vecesComido) {
         this.vecesComido = vecesComido;
     }

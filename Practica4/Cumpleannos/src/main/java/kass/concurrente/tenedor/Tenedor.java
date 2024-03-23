@@ -37,5 +37,10 @@ public interface Tenedor {
      */
     public int getVecesTomado();
 
+    /**
+     * Metodo que establece el numero de veces 
+     * que se tomo el tenedor
+     * @param vecesTomado
+     */
     public void setVecesTomado(int vecesTomado);
 }
