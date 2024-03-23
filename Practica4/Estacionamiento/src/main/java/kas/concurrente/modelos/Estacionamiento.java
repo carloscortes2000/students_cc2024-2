@@ -9,7 +9,7 @@ package kas.concurrente.modelos;
  */
 public class Estacionamiento {
     private Lugar[][] lugares;
-    private int lugaresDisponibles;
+    private volatile int lugaresDisponibles;
 
     /**
      * Metodo constructor
@@ -75,7 +75,7 @@ public class Estacionamiento {
         lugares[piso][lugarEnPiso].estaciona();
         lugaresDisponibles--;
     }
-
+    
 
     /**
      * Se obtiene un lugar de forma pseudoAleatoria

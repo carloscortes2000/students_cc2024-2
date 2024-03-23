@@ -1,6 +1,8 @@
 package kas.concurrente.modelos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +12,14 @@ import org.junit.jupiter.api.Test;
 
 public class EstacionamientoTest {
     Estacionamiento es;
-    final static int NUMLUGARES = 200;
+    final static int pisos = 4;
+    final static int lugaresPorPiso = 20;
+    final static int NUMLUGARES = pisos * lugaresPorPiso;
     List<Thread> hilos;
 
     @BeforeEach
     void setUp(){
-        es = new Estacionamiento(NUMLUGARES);
+        es = new Estacionamiento(pisos, lugaresPorPiso);
         initHilos();
     }
 
@@ -33,8 +37,10 @@ public class EstacionamientoTest {
      */
     @Test
     void conteoVecesEstacionado() throws InterruptedException{
-        for(int i = 0; i < NUMLUGARES; i++){
-            es.getLugares()[i].estaciona();
+        for(int i = 0; i < pisos; i++){
+            for(int j=0; i<lugaresPorPiso; j++){
+                es.getLugares()[i][j].estaciona();
+            }
         }
         assertEquals(NUMLUGARES, verificaVecesEstacionado());
     }
@@ -55,7 +61,10 @@ public class EstacionamientoTest {
     int verificaVecesEstacionado(){
         int res = 0;
         for(int i = 0; i < es.getLugares().length; ++i){
-            res += es.getLugares()[i].getVecesEstacionado();
+            for(int j=0; j< es.getLugares()[i].length; j++){
+                res += es.getLugares()[i][j].getVecesEstacionado();
+            }
+            
         }
 
         return res;
@@ -65,6 +74,27 @@ public class EstacionamientoTest {
      * AGREGA 2 TEST MAS
      * TEST bien hechos
      */
+
+    /**
+     * Test que verifica si el número de lugares disponibles disminuye después de que un carro entre al estacionamiento
+     * @throws InterruptedException
+     */
+    @Test
+    void entradaCarroDecrementaLugaresDisponibles() throws InterruptedException {
+        int lugaresAntes = es.getLugaresDisponibles();
+        // Simular la entrada de un carro
+        es.entraCarro(1);
+        int lugaresDespues = es.getLugaresDisponibles();
+        assertEquals(lugaresAntes - 1, lugaresDespues);
+    }
+
+    /**
+     * Test que verifica que el estacionamiento no esté lleno al inicio
+     */
+    @Test
+    void estacionamientoNoLlenoTest() {
+        assertFalse(es.estaLleno());
+    }
 
     void initHilos(){
         hilos = new ArrayList<>();

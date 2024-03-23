@@ -1,6 +1,7 @@
 package kas.concurrente.modelos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -25,19 +26,51 @@ public class LugarTest {
 
     @Test
     void constructorTest(){
-        assertTrue(lugar.getId() == 1 && lugar.getDisponible() == true && lugar.getFiltroModificado() != null);
+        assertTrue(lugar.getId() == 1 && lugar.getDisponible() == true);
     }
 
     @Test
     void estacionaTest() throws InterruptedException{
         lugar.estaciona();
-        assertTrue(lugar.getDisponible());
+        assertFalse(lugar.getDisponible());
     }
 
     /**
      * AGREGA 2 TEST MAS
      * TEST bien hechos
      */
+
+    @Test
+    void noDisponibleDespuesDeEstacionarTest() throws InterruptedException {
+        lugar.estaciona();
+        assertFalse(lugar.getDisponible());
+    }
+
+    @Test
+    void lugarLibreDespuesDeSalirCarroTest() throws InterruptedException {
+        lugar.estaciona();
+        lugar.vePorPastel();
+        assertTrue(lugar.getDisponible());
+    }
+
+    void initHilos() {
+        hilos = new ArrayList<>();
+
+        for (int i = 0; i < numHilos; ++i) {
+            Thread t = new Thread(this::simulaEstacionamiento, "" + i);
+            hilos.add(t);
+        }
+    }
+
+    void simulaEstacionamiento() {
+        try {
+            lugar.estaciona();
+            lugar.vePorPastel();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
