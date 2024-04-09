@@ -29,7 +29,9 @@ public class CLHLock implements Lock {
         qnode.locked = true;
         QNode pred = tail.getAndSet(qnode);
         myPred.set(pred);
-        while (pred.locked) {}
+        while (pred.locked) {
+            Thread.yield();
+        }
     }
 
     @Override

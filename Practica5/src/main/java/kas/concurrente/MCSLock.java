@@ -8,7 +8,7 @@ public class MCSLock implements Lock {
 
     public MCSLock(){
         myNode = new ThreadLocal<QNode>(){
-            
+
             @Override
             protected QNode initialValue(){
                 return new QNode();
@@ -27,7 +27,9 @@ public class MCSLock implements Lock {
         if (pred != null) {
             qnode.locked = true;
             pred.next = qnode;
-            while (qnode.locked) {}
+            while (qnode.locked) {
+                Thread.yield();
+            }
         }
     }
 
