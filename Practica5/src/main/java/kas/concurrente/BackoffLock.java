@@ -11,7 +11,7 @@ public class BackoffLock implements Lock {
     public void lock() {
         Backoff backoff = new Backoff(MIN_DELAY, MAX_DELAY);
         while (true) {
-            while (state.get()) {
+            while (state.get());
                 if (!state.getAndSet(true)) {
                     return;
                 }else{
@@ -22,7 +22,6 @@ public class BackoffLock implements Lock {
                         e.printStackTrace();
                     }
                 }
-            }
         }   
     }
 

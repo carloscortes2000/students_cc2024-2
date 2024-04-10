@@ -7,11 +7,9 @@ public class TTASLock implements Lock{
     @Override
     public void lock() {
         while (true) {
-            while (state.get()) {
-                if (!state.getAndSet(true)) {
+            while (state.get());
+                if (!state.getAndSet(true))
                     return;
-                }
-            }
         }
     }
 

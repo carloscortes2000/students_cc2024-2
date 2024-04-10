@@ -17,7 +17,7 @@ public class ALock implements Lock{
     public ALock(int hilos){
         size = hilos;
         tail = new AtomicInteger(0);
-        flag = new boolean[hilos];
+        flag = new boolean[size];
         flag[0] = true;
     }
 
@@ -25,7 +25,9 @@ public class ALock implements Lock{
     public void lock() {
         int slot = tail.getAndIncrement() % size;
         mySlotIndex.set(slot);
-        while (! flag[slot]);
+        while (! flag[slot]){
+            Thread.yield();
+        }
     }
 
     @Override

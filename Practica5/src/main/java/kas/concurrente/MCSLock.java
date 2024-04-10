@@ -7,6 +7,7 @@ public class MCSLock implements Lock {
     ThreadLocal<QNode> myNode;
 
     public MCSLock(){
+        tail = new AtomicReference<QNode>(null);
         myNode = new ThreadLocal<QNode>(){
 
             @Override
@@ -39,7 +40,9 @@ public class MCSLock implements Lock {
        if (qnode.next == null) {
             if (tail.compareAndSet(qnode, null))
                 return;
-            while (qnode.next == null) {}
+            while (qnode.next == null) {
+                Thread.yield();
+            }
        }
        qnode.next.locked = false;
        qnode.next = null;
