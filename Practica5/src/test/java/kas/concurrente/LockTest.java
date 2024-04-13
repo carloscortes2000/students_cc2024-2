@@ -50,13 +50,20 @@ public class LockTest {
         }
     }   
 
+    
+    @Test
+    void aLock() throws InterruptedException {
+        System.out.println("HILOS " + HILOS);
+        ejecutaPrueba(new ALock(HILOS));
+    }
+
+    /*
     @Test
     void tasLock() throws InterruptedException{
         System.out.println("HILOS " + HILOS);
         ejecutaPrueba(new TASLock());
     }
 
-    /* 
     @Test
     void ttasLock() throws InterruptedException {
         ejecutaPrueba(new TTASLock());
@@ -76,11 +83,6 @@ public class LockTest {
     @Test
     void mcsLock() throws InterruptedException {
         ejecutaPrueba(new MCSLock());
-    }
-    
-    @Test
-    void aLock() throws InterruptedException {
-        ejecutaPrueba(new ALock(HILOS));
     }
 
     */

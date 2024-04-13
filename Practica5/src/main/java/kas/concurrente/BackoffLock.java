@@ -17,7 +17,6 @@ public class BackoffLock implements Lock {
                 }else{
                     try {
                         backoff.backoff();
-                        Thread.yield();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
